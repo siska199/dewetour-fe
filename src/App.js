@@ -15,10 +15,9 @@ import { API, setAuthToken } from "./config/api";
 function App() {
   const { dataUser, setDataUser } = useContext(UserContext);
   useEffect(() => {
-    setTimeout(() => {
-      checkUser(setDataUser);
-    }, 500);
-  }, [dataUser.status]);
+    checkUser(setDataUser);
+    console.log("dataUser: ", dataUser)
+  }, [dataUser.isLogin]);
 
   return (
     <>
@@ -49,6 +48,7 @@ const checkUser = async (setDataUser) => {
     if (localStorage.token) {
       setAuthToken(localStorage.getItem("token"));
       const response = await API.get("/check-auth");
+      console.log("Check auth: ",response.data.data)
       if (response?.status === 200) {
         if (response.data.data) {
           setDataUser({

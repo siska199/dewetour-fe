@@ -208,7 +208,7 @@ function CountIDR({
           <span className="count">
             {" "}
             <span style={{ color: "#FFAF00" }}></span>
-            {toRupiah(initialPrice, {
+            {toRupiah(String(initialPrice), {
               formal: false,
               symbol: "IDR",
               floatingPoint: 0,
@@ -238,7 +238,7 @@ function CountIDR({
         </Col>
         <Col lg={6} md={6} sm={6} xs={7} className="text-end">
           <span className="count">
-            {toRupiah(String(price), {
+          {toRupiah(String(price), {
               formal: false,
               symbol: "IDR",
               floatingPoint: 0,

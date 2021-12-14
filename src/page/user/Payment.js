@@ -20,7 +20,7 @@ const style = {
 export default function Payment() {
   const [show, setShow] = useState(false); //Modal pay state
   const [render, setRender] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [dataTransaction, setDataTransaction] = useState();
   const [dataImages, setDataImages] = useState("");
   const uploudImage =
@@ -31,13 +31,6 @@ export default function Payment() {
       getData();
     }, 500);
   }, [render]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-      getData();
-    }, 1000);
-  }, []);
 
   const handelModal = () => {
     setRender(!render);
@@ -106,6 +99,7 @@ export default function Payment() {
   };
 
   const getData = async () => {
+    setLoading(true)
     await API.get("/transactions")
       .then((res) => {
         let newData = [];
@@ -120,6 +114,8 @@ export default function Payment() {
             newData.unshift(data);
           }
         }
+        console.log("Payment response user newData:",newData )
+
         setDataTransaction(newData);
         const imagesData = newData.map((d) => {
           return {
@@ -129,6 +125,8 @@ export default function Payment() {
           };
         });
         setDataImages(imagesData);
+        setLoading(false)
+
       })
       .catch((err) => console.log(err));
   };
@@ -139,79 +137,48 @@ export default function Payment() {
   return (
     <div className="container-user" style={style.container}>
       <NavbarComponent bg={bgNavbar} />
-      {dataTransaction?.map((d, i) => {
-        const newD = JSON.stringify(d).split(",");
-        let marginTop = false;
-        if (i > 0) {
-          marginTop = true;
-        }
-        // eslint-disable-next-line eqeqeq
-        if (d.status == "Waiting Payment") {
-          return (
-            <div key={i}>
-              {Object.entries(dataImages)?.map((dImg, k) => {
-                if (k == i) {
-                  return (
-                    <DetailPayment
-                      key={k}
-                      id={k}
-                      imagePreview={dImg[1].imageURL}
-                      handleImage={handleImage}
-                      marginTop={marginTop}
-                      data={JSON.parse(newD)}
-                      border={true}
-                    />
-                  );
-                }
-              })}
-              <div
-                style={{ marginTop: "30px" }}
-                className="container px-3 c-payment text-end"
-              >
-                <button
-                  onClick={() => addPayment(i)}
-                  style={{
-                    fontWeight: "900",
-                    fontSize: "18px",
-                    color: "white",
-                    width: "113px",
-                  }}
-                  className="btn btn-warning me-2"
+      <div style={{"marginTop":"170px"}}>
+        {dataTransaction?.map((d, i) => {
+          const newD = JSON.stringify(d).split(",");
+          let marginTop = false;
+          if (i > 0) {
+            marginTop = true;
+          }
+          // eslint-disable-next-line eqeqeq
+          if (d.status == "Waiting Payment") {
+            return (
+              <div key={i}>
+                {Object.entries(dataImages)?.map((dImg, k) => {
+                  if (k == i) {
+                    return (
+                      <DetailPayment
+                        key={k}
+                        id={k}
+                        imagePreview={dImg[1].imageURL}
+                        handleImage={handleImage}
+                        marginTop={marginTop}
+                        data={JSON.parse(newD)}
+                        border={true}
+                      />
+                    );
+                  }
+                })}
+                <div
+                  style={{ marginTop: "30px" }}
+                  className="container px-3 c-payment text-end"
                 >
-                  Pay
-                </button>
-                <button
-                  onClick={() => deleteTransaction(i)}
-                  style={{
-                    fontWeight: "900",
-                    fontSize: "18px",
-                    color: "white",
-                    width: "113px",
-                  }}
-                  className="btn btn-danger"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          );
-        } else if (
-          d.status == "Waiting Approve" ||
-          d.status == "Payment Rejected"
-        ) {
-          return (
-            <div key={i}>
-              <DetailPayment
-                key={String(i)}
-                marginTop={marginTop}
-                data={JSON.parse(newD)}
-                border={true}
-              />
-              <div
-                style={{ marginTop: "30px" }}
-                className="container px-3 c-payment text-end"
-              >
-                {d.status === "Payment Rejected" && (
+                  <button
+                    onClick={() => addPayment(i)}
+                    style={{
+                      fontWeight: "900",
+                      fontSize: "18px",
+                      color: "white",
+                      width: "113px",
+                    }}
+                    className="btn btn-warning me-2"
+                  >
+                    Pay
+                  </button>
                   <button
                     onClick={() => deleteTransaction(i)}
                     style={{
@@ -224,29 +191,63 @@ export default function Payment() {
                   >
                     Delete
                   </button>
-                )}
+                </div>
               </div>
-            </div>
-          );
-        }
-      })}
-      <div>
-        {dataTransaction?.filter(
-          (d) =>
-            d.status == "Waiting Payment" ||
+            );
+          } else if (
             d.status == "Waiting Approve" ||
             d.status == "Payment Rejected"
-        ).length == 0 && (
-          <div style={{ marginTop: "210px" }}>
-            <Empty header={"Payment Trip"} />
-          </div>
-        )}
+          ) {
+            return (
+              <div key={i}>
+                <DetailPayment
+                  key={String(i)}
+                  marginTop={marginTop}
+                  data={JSON.parse(newD)}
+                  border={true}
+                />
+                <div
+                  style={{ marginTop: "30px" }}
+                  className="container px-3 c-payment text-end"
+                >
+                  {d.status === "Payment Rejected" && (
+                    <button
+                      onClick={() => deleteTransaction(i)}
+                      style={{
+                        fontWeight: "900",
+                        fontSize: "18px",
+                        color: "white",
+                        width: "113px",
+                      }}
+                      className="btn btn-danger"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          }
+        })}
+        <div>
+          {dataTransaction?.filter(
+            (d) =>
+              d.status == "Waiting Payment" ||
+              d.status == "Waiting Approve" ||
+              d.status == "Payment Rejected"
+          ).length == 0 && (
+            <div style={{ marginTop: "210px" }}>
+              <Empty header={"Payment Trip"} />
+            </div>
+          )}
+        </div>
+        <ModalPayment
+          handelModal={handelModal}
+          addPayment={addPayment}
+          show={show}
+        />
       </div>
-      <ModalPayment
-        handelModal={handelModal}
-        addPayment={addPayment}
-        show={show}
-      />
+     
       <Footer />
     </div>
   );

@@ -58,6 +58,7 @@ export default function ModalLogin({ handelRegister }) {
           isLogin: true,
           ...response.data.data,
         });
+        console.log("Log in modal")
         localStorage.setItem("token", response.data.data.token); //Set Token:
         setLogin(false); //Off modal
         setFormValue(defaultValueForm);

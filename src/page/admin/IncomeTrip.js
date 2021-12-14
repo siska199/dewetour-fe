@@ -16,6 +16,7 @@ const style = {
     overflow: "hidden",
   },
 };
+
 export default function IncomeTrip() {
   let history = useHistory();
   const [dataTour, setDataTour] = useState();
@@ -26,14 +27,17 @@ export default function IncomeTrip() {
     }, 1000);
     getData();
   }, []);
+
+  const pathCloudinary = 'https://res.cloudinary.com/university-state-of-malang-city/image/upload/v1/'
   const getData = async () => {
     try {
       await API.get("/trip-transactions")
         .then((res) => {
+          console.log("data incoming transactions: ",res.data.data)
           const edData = res.data.data.map((edD) => {
             let images = [];
             for (const file of JSON.parse(edD.images)) {
-              images.push(file);
+              images.push(pathCloudinary+file);
             }
             let sumTotal = 0;
             edD.tripTransactions.forEach((tran) => {
@@ -41,7 +45,7 @@ export default function IncomeTrip() {
             });
             return {
               ...edD,
-              images: images[0],
+              images: images[2],
               price: sumTotal,
             };
           });

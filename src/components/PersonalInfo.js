@@ -6,6 +6,7 @@ import { MdEmail } from "react-icons/md";
 import { API } from "../config/api";
 import InputGroup from "./InputGroup";
 import Swal from "sweetalert2";
+import { FaSpinner } from "react-icons/fa";
 
 const style = {
   h: {
@@ -18,7 +19,7 @@ export default function PersonalInfo({ renderPage, data }) {
   const [imagePreview, seImagePreview] = useState(data.image);
   const target = useRef(null); //The target is image input form
   const [isEdit, setIsEdit] = useState(false);
-
+  const [isLoading, setIsloading] = useState(false)
   const label = ["Full Name", "Email", "Phone", "Address"];
   const [formValue, setFormValue] = useState({
     fullName: data.fullName,
@@ -46,9 +47,9 @@ export default function PersonalInfo({ renderPage, data }) {
     setIsEdit(true);
   };
   const handelSaveProfile = async (e) => {
+    setIsloading(true)
     try {
       e.preventDefault();
-      setIsEdit(false);
       const config = {
         headers: {
           "Content-type": "multipart/form-data",
@@ -61,11 +62,12 @@ export default function PersonalInfo({ renderPage, data }) {
         }
       }
       const response = await API.patch("/user", formData, config);
-      setIsEdit(false);
-      renderPage();
-      history.push("/profile");
       if (response.status === 200) {
+        setIsEdit(false);
+        setIsloading(false)
+        renderPage();
         sweetAlert(true, "success", "Updated Profile Success");
+        history.push("/profile");
       }
     } catch (error) {
       sweetAlert(true, "info", `${error.response.data.message}`);
@@ -133,7 +135,10 @@ export default function PersonalInfo({ renderPage, data }) {
                 type="submit"
                 className="btn btn-warning mt-3"
               >
-                Submit
+                Submit {" "}
+                {
+                  isLoading && <FaSpinner color="white" icon="spinner" className="spinner" />
+                }
               </button>
             </div>
           </form>

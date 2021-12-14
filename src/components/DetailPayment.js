@@ -359,7 +359,7 @@ function Table({ data }) {
         >
           Total :{" "}
           <span style={{ color: "#FF0000" }}>
-            {toRupiah(data.total, {
+            {toRupiah(String(data.total), {
               formal: false,
               symbol: "IDR",
               floatingPoint: 0,

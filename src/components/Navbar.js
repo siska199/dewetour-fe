@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { ModalContext } from "../context/ModalContext";
@@ -37,6 +38,8 @@ export default function NavbarComponent({ bg }) {
 
   const [navbar, setNavbar] = useState(false);
   useEffect(() => {
+    console.log(dataUser)
+    console.log("dataUser enter in navbar: ", dataUser?.image)
     let isMounted = true;
     const handelNavbarBg = () => {
       if (isMounted) {
