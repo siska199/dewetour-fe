@@ -38,8 +38,7 @@ export default function NavbarComponent({ bg }) {
 
   const [navbar, setNavbar] = useState(false);
   useEffect(() => {
-    console.log(dataUser)
-    console.log("dataUser enter in navbar: ", dataUser?.image)
+
     let isMounted = true;
     const handelNavbarBg = () => {
       if (isMounted) {

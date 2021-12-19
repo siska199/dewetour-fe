@@ -33,7 +33,6 @@ export default function IncomeTrip() {
     try {
       await API.get("/trip-transactions")
         .then((res) => {
-          console.log("data incoming transactions: ",res.data.data)
           const edData = res.data.data.map((edD) => {
             let images = [];
             for (const file of JSON.parse(edD.images)) {

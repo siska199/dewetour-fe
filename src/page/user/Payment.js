@@ -114,7 +114,6 @@ export default function Payment() {
             newData.unshift(data);
           }
         }
-        console.log("Payment response user newData:",newData )
 
         setDataTransaction(newData);
         const imagesData = newData.map((d) => {
@@ -137,7 +136,7 @@ export default function Payment() {
   return (
     <div className="container-user" style={style.container}>
       <NavbarComponent bg={bgNavbar} />
-      <div style={{"marginTop":"170px"}}>
+      <div className="">
         {dataTransaction?.map((d, i) => {
           const newD = JSON.stringify(d).split(",");
           let marginTop = false;

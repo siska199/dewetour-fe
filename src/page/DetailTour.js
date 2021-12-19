@@ -30,16 +30,17 @@ const style = {
 
 export default function DetailTour() {
   const [imagesTrip, setImagesTrip] = useState();
-  const [dataTour, setDataTour] = useState();
+  const [dataTour, setDataTour] = useState(false);
   const [loading, setLoading] = useState(true);
   const { dataUser } = useContext(UserContext);
   const { setLogin } = useContext(ModalContext);
   let { id } = useParams();
 
   useEffect(() => {
+    fetchData();
+
     const timer = setTimeout(() => {
       setLoading(false);
-      fetchData();
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
@@ -123,35 +124,44 @@ export default function DetailTour() {
   }
   return (
     <div style={style.container}>
-      <NavbarComponent bg={bgNavbar} />
-      <Header
-        title={String(dataTour?.title)}
-        country={String(dataTour?.country.name)}
-      />
-      <BackgroundImageLanding
-        tp={"625px"}
-        lp={"-110px"}
-        th={"200px"}
-        lh={"1200px"}
-      />
-      {imagesTrip && <Galery images={imagesTrip} />}
-      {dataTour && <InformationTrip data={dataTour} />}
-      {dataUser.status === "admin" ? (
-        <></>
-      ) : (
-        <>
-          {dataTour && (
-            <CountIDR
-              initialPrice={dataTour.price}
-              price={price}
-              count={count}
-              handelMaxPrice={handelMaxPrice}
-              handelMinPrice={handelMinPrice}
+      {
+        dataTour?(
+          <>
+            <NavbarComponent bg={bgNavbar} />
+            <Header
+              title={String(dataTour?.title)}
+              country={String(dataTour?.country.name)}
             />
-          )}
-          <Button handelBookNow={handelBookNow} />
-        </>
-      )}
+            <BackgroundImageLanding
+              tp={"625px"}
+              lp={"-110px"}
+              th={"200px"}
+              lh={"1200px"}
+            />
+            {imagesTrip && <Galery images={imagesTrip} />}
+            {dataTour && <InformationTrip data={dataTour} />}
+            {dataUser.status === "admin" ? (
+              <></>
+            ) : (
+              <>
+                {dataTour && (
+                  <CountIDR
+                    initialPrice={dataTour.price}
+                    price={price}
+                    count={count}
+                    handelMaxPrice={handelMaxPrice}
+                    handelMinPrice={handelMinPrice}
+                  />
+                )}
+                <Button handelBookNow={handelBookNow} />
+              </>
+            )}
+          </>
+        ):(
+          <>
+          </>
+        )
+      }
       <Footer />
     </div>
   );

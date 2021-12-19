@@ -42,7 +42,6 @@ export default function Galery({ images }) {
     }
   };
   const rightImage = () => {
-    console.log("Left");
     const index = images.findIndex((img) => img == imgModal);
     if (index + 1 == images.length) {
       setImgModal(images[1]);

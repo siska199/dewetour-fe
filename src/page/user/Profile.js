@@ -25,8 +25,6 @@ export default function Profile() {
   const [render, setRender] = useState(false);
 
   useEffect(() => {
-    console.log("Ngikut render");
-    console.log("data profile hasil sebelum update: ", dataUser);
     const fetchData = async () => {
       await getUser();
     };

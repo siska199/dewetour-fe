@@ -24,10 +24,10 @@ export default function LandingPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    getData();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    getData();
   }, []);
 
   const [keyWord, setKeyWord] = useState("");
@@ -80,6 +80,7 @@ export default function LandingPage() {
           );
           setDataTour(newDatas);
         }
+        
       })
       .catch((err) => console.log(err));
   };
@@ -87,6 +88,7 @@ export default function LandingPage() {
   if (loading) {
     return <Loading type={"Circles"} />;
   }
+
   return (
     <div style={style.container} className="main-c">
       <NavbarComponent />

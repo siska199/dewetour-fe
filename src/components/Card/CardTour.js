@@ -33,20 +33,16 @@ export default function CardTour({d,admin,noEdit,handelRender}){
             }
          }, function(dismiss){
             if(dismiss == 'cancel'){
-                console.log(dismiss)
             }
          });
     }
 
     const deletData = async(id)=>{
         try {
-            console.log("ID Trip: ", id)
-            const response = await API.delete(`/trip/${id}`)
-            console.log("Delete transaction: ", response)
+            await API.delete(`/trip/${id}`)
             handelRender()
             sweetAlert(false,'success',"Delete Trip Success")
         } catch (error) {
-            console.log(error)
         }
     }
 
@@ -61,13 +57,14 @@ export default function CardTour({d,admin,noEdit,handelRender}){
     }
     return(
         <Col lg={4} md={5} sm={6} xs={9} className="mb-3 p-md-2 p-sm-2 px-lg-4 pb-lg-4">
-            <div  style={{"cursor":`${admin?"auto":"pointer"}`,"color":"black"}} className="card card-tour mx-lg-3 mx-md-1 mx-sm-1 ">
+            <div   style={{"cursor":`${admin?"auto":"pointer"}`,"color":"black"}} className="card card-tour mx-lg-3 mx-md-1 mx-sm-1 ">
                 <div onClick={handelClick}>
                     <p className="text-center">
-                        <img src={d.images} style={{"width":"328px","height":"241px","objectFit":"cover"}} className="p-2 img-fluid" alt="..." />
+                        <img src={d.images} style={{"objectFit":"cover"}} className="p-2 img-fluid" alt="..." />
                     </p>
                     {
-                        !admin && <div>
+                        !admin && 
+                        <div>
                         {
                             d.quota ===0?(
                                 <span className="id-tour tour-full">Quota Full</span>
@@ -78,7 +75,7 @@ export default function CardTour({d,admin,noEdit,handelRender}){
                         </div>
                     }
                     <div className="card-body">
-                        <p className="text-overflow" style={{"fontWeight": "800","fontSize": "21px", "marginTop":`${admin?"0px":"-50px"}`}}>
+                        <p className="text-overflow" style={{"fontWeight": "800","fontSize": "21px", "marginTop":`${admin?"0px":"-30px"}`}}>
                             {String(d.title)}
                         </p>
                         <div  className="row">

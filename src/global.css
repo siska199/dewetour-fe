@@ -188,7 +188,7 @@ body {
 
 .id-tour {
   background: white;
-  position: relative;
+  position: absolute;
   height: 34px;
   width: 62px;
   display: flex;
@@ -197,7 +197,10 @@ body {
   border-radius: 5px;
   font-weight: 800;
   font-size: 17px;
+  top: 60px;
+  right: 0px;
 }
+
 .tour-full {
   width: 90px;
 }
@@ -474,10 +477,10 @@ body {
     width: 100px !important;
     height: 50px !important;
   }
-  .id-tour {
+  /* .id-tour {
     top: -200px !important;
     left: 0px !important;
-  }
+  } */
   .btn-icon {
     top: 11px !important;
     left: 11px !important;
@@ -527,10 +530,10 @@ body {
   .c-info {
     margin-top: -10px !important;
   }
-  .id-tour {
+  /* .id-tour {
     top: -200px !important;
     left: 270px !important;
-  }
+  } */
   .btn-icon {
     top: 10px !important;
     left: 13px !important;
@@ -614,10 +617,10 @@ body {
     margin-top: -10px;
     font-size: 30px;
   }
-  .id-tour {
+  /* .id-tour {
     top: -160px !important;
     left: 175px !important;
-  }
+  } */
   .btn-icon {
     top: 10px !important;
     left: 10px !important;
@@ -701,10 +704,10 @@ body {
   .c-info {
     margin-top: -70px !important;
   }
-  .id-tour {
+  /* .id-tour {
     top: -180px !important;
     left: 210px !important;
-  }
+  } */
   .btn-icon {
     top: 10px !important;
     left: 10px !important;
@@ -796,10 +799,10 @@ body {
   .jumbotron::after {
     bottom: 130px;
   }
-  .id-tour {
+  /* .id-tour {
     top: -150px !important;
     left: 170px !important ;
-  }
+  } */
   .btn-icon {
     top: 10px !important;
     left: 10px !important;
@@ -892,10 +895,10 @@ body {
   .jumbotron .p {
     font-size: 64px;
   }
-  .id-tour {
-    top: -190px !important;
-    left: 235px !important;
-  }
+  /* .id-tour {
+    top: 30px !important;
+    left: 230px !important;
+  } */
 
   .btn-icon {
     top: 10px !important;
@@ -986,6 +989,9 @@ body {
   }
   .fill-contact-us {
     margin-top: -60px;
+  }
+  .card-tour{
+
   }
 }
 

@@ -43,9 +43,7 @@ export default function ContactUs() {
         setLoading(false);
         setFormValue(initialForm);
       }
-      console.log("response", res);
     } catch (error) {
-      console.log(error);
     }
   };
   const sweetAlert = (show = false, type = "", msg = "") => {
