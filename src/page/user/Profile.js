@@ -19,22 +19,19 @@ const style = {
 };
 export default function Profile() {
   const { dataUser, setDataUser } = useContext(UserContext);
-  const [dataProfile, setDataProfile] = useState();
-  const [dataTransaction, setDataTransaction] = useState();
-  const [loading, setLoading] = useState();
-  const [render, setRender] = useState(false);
+  const [dataProfile, setDataProfile] = useState(false);
+  const [dataTransaction, setDataTransaction] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [render, setRender] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getUser();
-    };
-    fetchData();
+    getUser()
   }, [render]);
 
   useEffect(() => {
-    setLoading(true);
+    getUser()
+    getData();
     setTimeout(() => {
-      getData();
       setLoading(false);
     }, 1000);
   }, []);
@@ -80,7 +77,7 @@ export default function Profile() {
       {dataProfile && (
         <PersonalInfo renderPage={renderPage} data={dataProfile} />
       )}
-      {dataTransaction?.map((d, i) => {
+      {dataTransaction && dataTransaction?.map((d, i) => {
         const newD = JSON.stringify(d).split(",");
         let marginTop = false;
         if (i > 0) {
@@ -103,7 +100,7 @@ export default function Profile() {
         );
       })}
       <div>
-        {dataTransaction?.length == 0 && <Empty header={"History Trip"} />}
+        {dataTransaction && dataTransaction?.length == 0 && <Empty header={"History Trip"} />}
       </div>
       <Footer />
     </div>

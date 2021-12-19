@@ -56,7 +56,7 @@ export default function ContactUs() {
   };
 
   return (
-    <div style={{ marginTop: "-100px" }} className="bg-light">
+    <div className="bg-light">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path
           fill="#F1F1F1"

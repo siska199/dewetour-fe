@@ -141,13 +141,13 @@ export default function AddTrip() {
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    getCountries();
     setTimeout(() => {
-      getCountries();
       setLoading(false);
     }, 1000);
   }, []);
 
-  const [countries, setCountries] = useState();
+  const [countries, setCountries] = useState(false);
   const [formCountry, setFormCountry] = useState("");
   const handleOnChangeCountry = (e) => {
     setFormCountry(e.target.value);

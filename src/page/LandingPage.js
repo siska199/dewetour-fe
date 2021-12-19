@@ -82,7 +82,10 @@ export default function LandingPage() {
         }
         
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{
+        console.log(err)
+        setRender(!render)
+      });
   };
 
   if (loading) {

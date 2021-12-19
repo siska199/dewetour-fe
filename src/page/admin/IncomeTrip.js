@@ -19,13 +19,13 @@ const style = {
 
 export default function IncomeTrip() {
   let history = useHistory();
-  const [dataTour, setDataTour] = useState();
+  const [dataTour, setDataTour] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    getData();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-    getData();
   }, []);
 
   const pathCloudinary = 'https://res.cloudinary.com/university-state-of-malang-city/image/upload/v1/'
@@ -92,7 +92,7 @@ export default function IncomeTrip() {
         </div>
 
         <div className="row mt-4 justify-content-lg-start justify-content-center">
-          {dataTour?.map((d, i) => {
+          {dataTour && dataTour?.map((d, i) => {
             const newD = JSON.stringify(d).split(",");
             return (
               <CardTour
@@ -107,7 +107,7 @@ export default function IncomeTrip() {
         </div>
 
         <div className="row pt-0 justify-content-center">
-          {dataTour?.length == 0 && <Empty header={false} />}
+          {dataTour && dataTour?.length == 0 && <Empty header={false} />}
         </div>
       </div>
       <Footer />

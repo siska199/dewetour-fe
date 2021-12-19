@@ -29,7 +29,7 @@ const style = {
 };
 
 export default function DetailTour() {
-  const [imagesTrip, setImagesTrip] = useState();
+  const [imagesTrip, setImagesTrip] = useState(false);
   const [dataTour, setDataTour] = useState(false);
   const [loading, setLoading] = useState(true);
   const { dataUser } = useContext(UserContext);
@@ -129,8 +129,8 @@ export default function DetailTour() {
           <>
             <NavbarComponent bg={bgNavbar} />
             <Header
-              title={String(dataTour?.title)}
-              country={String(dataTour?.country.name)}
+              title={String(dataTour.title)}
+              country={String(dataTour.country.name)}
             />
             <BackgroundImageLanding
               tp={"625px"}
@@ -139,12 +139,11 @@ export default function DetailTour() {
               lh={"1200px"}
             />
             {imagesTrip && <Galery images={imagesTrip} />}
-            {dataTour && <InformationTrip data={dataTour} />}
+            <InformationTrip data={dataTour} />           
             {dataUser.status === "admin" ? (
               <></>
             ) : (
               <>
-                {dataTour && (
                   <CountIDR
                     initialPrice={dataTour.price}
                     price={price}
@@ -152,7 +151,6 @@ export default function DetailTour() {
                     handelMaxPrice={handelMaxPrice}
                     handelMinPrice={handelMinPrice}
                   />
-                )}
                 <Button handelBookNow={handelBookNow} />
               </>
             )}

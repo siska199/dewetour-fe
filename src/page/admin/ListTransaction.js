@@ -19,21 +19,18 @@ const style = {
   },
 };
 export default function ListTransaction() {
-  const [dataTransaction, setDataTransaction] = useState();
-  const [loading, setLoading] = useState();
+  const [dataTransaction, setDataTransaction] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [render, setRender] = useState(false);
   useEffect(() => {
-    setLoading(true);
+    getData();
     setTimeout(() => {
       setLoading(false);
-      getData();
     }, 1000);
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      getData();
-    }, 1000);
+    getData();
   }, [render]);
 
   const handelRender = () => {
@@ -60,7 +57,7 @@ export default function ListTransaction() {
           {dataTransaction?.length != 0 ? (
             <>
               <ListHeader />
-              {dataTransaction?.map((d, i) => {
+              {dataTransaction && dataTransaction?.map((d, i) => {
                 const newD = JSON.stringify(d).split(",");
                 return (
                   <ListData
